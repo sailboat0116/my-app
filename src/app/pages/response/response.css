@@ -1,0 +1,153 @@
+/* === ResponseComponent 專用主題（原 :root -> :host） === */
+:host{
+  --bg:#f8fafc;          /* 淺底 */
+  --panel:#ffffff;       /* 卡片底 */
+  --border:#e5e7eb;      /* 邊框 */
+  --muted:#6b7280;       /* 次要字 */
+  --text:#0f172a;        /* 主要字 */
+  --brand:#4f46e5;       /* 主色 */
+  --ok:#059669;          /* 成功 */
+  --warn:#d97706;        /* 警示 */
+  --bad:#dc2626;         /* 危險 */
+  --pill:#eef2ff;        /* 淡淡的藍色 pill 底 */
+  --mono:#0b1220;        /* 等寬字顏色（但不會太黑） */
+  --mono-bg:#f3f4f6;     /* 報告區塊背景：柔和、非純白 */
+  --hover:#f1f5f9;       /* hover 背景 */
+  --shadow:0 6px 20px rgba(15, 23, 42, .06);
+
+  display:block;
+  min-height:100vh;
+  color:var(--text);
+  background:var(--bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial, "Microsoft JhengHei", "PingFang TC", "Heiti TC", sans-serif;
+  line-height:1.6;
+}
+
+/* 內部元素 box-sizing */
+:host * { box-sizing: border-box; }
+
+/* 容器 */
+.container{
+  max-width: 1100px;
+  margin: 32px auto 80px;
+  padding: 0 16px;
+}
+
+/* 頁首 */
+.page-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-bottom:16px;
+}
+.title{
+  font-size: clamp(20px, 1.6rem, 28px);
+  font-weight: 700;
+  letter-spacing:.3px;
+}
+.subtitle{
+  color: var(--muted);
+  font-size:.95rem;
+  margin-top: -4px;
+}
+
+/* 工具列 */
+.toolbar{
+  display:flex; flex-wrap:wrap; gap:10px;
+  margin: 10px 0 18px;
+}
+.btn{
+  padding:10px 14px; border:1px solid var(--border); border-radius:8px; background:#fff;
+  cursor:pointer; font-weight:600;
+  transition: background .15s ease, transform .02s ease;
+}
+.btn:hover{ background: var(--hover); }
+.btn:active{ transform: translateY(1px); }
+.btn.brand{ background: var(--brand); color:#fff; border-color: var(--brand); }
+.btn.brand:hover{ filter: brightness(.96); }
+.btn.danger{ background:#fff; color: var(--bad); border-color: #fecaca; }
+.btn.danger:hover{ background:#fff5f5; }
+.btn.ghost{ background:transparent; }
+
+/* 卡片 */
+.card{
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow: var(--shadow);
+  padding:16px;
+}
+
+/* 自適應雙欄佈局 */
+.grid{
+  display:grid; gap:16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px){
+  .grid{ grid-template-columns: 1.1fr .9fr; }
+}
+
+.section-head{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  margin-bottom:10px;
+}
+.section-head h3{ margin:0; font-size:1.05rem; }
+.pill{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 10px; border:1px solid var(--border); border-radius:999px;
+  background: var(--pill);
+  color:#3730a3; font-weight:600; font-size:.9rem;
+}
+
+/* 報告預覽（可捲動、等寬） */
+.report-pre{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", "Noto Sans Mono CJK TC", monospace;
+  background: var(--mono-bg);
+  color: var(--mono);
+  border:1px dashed var(--border);
+  border-radius:10px;
+  padding:14px;
+  white-space: pre-wrap;
+  overflow:auto;
+  max-height: 420px;
+}
+
+/* JSON viewer 區 */
+.json-tools{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  margin-bottom:8px;
+}
+details.summary-card{
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  padding:10px 12px;
+}
+details.summary-card > summary{
+  list-style:none; cursor:pointer; outline:none; user-select:none;
+  font-weight:700;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+details.summary-card[open]{ box-shadow: var(--shadow); }
+.json-pre{
+  background: var(--mono-bg);
+  color: var(--mono);
+  border:1px dashed var(--border);
+  border-radius:10px;
+  padding:12px;
+  white-space: pre-wrap;
+  overflow:auto;
+  max-height: 420px;
+  margin-top:10px;
+}
+
+/* 頁腳提示 */
+.hint{ color: var(--muted); font-size:.92rem; }
+
+/* 固定側邊快速動作（選配） */
+.side-buttons {
+  position: fixed; right: 24px; top: 120px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.side-buttons .btn{ background:#fff; }
+@media (max-width: 1080px){
+  .side-buttons{ display:none; }
+}

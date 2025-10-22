@@ -1,0 +1,206 @@
+/* === ReportComponent 專用主題與變數 === */
+:host {
+  --bg: #f8fafc;          /* 背景 */
+  --panel: #ffffff;       /* 卡片底 */
+  --border: #e5e7eb;      /* 邊框 */
+  --muted: #6b7280;       /* 次要字 */
+  --text: #0f172a;        /* 主要字 */
+  --brand: #4f46e5;       /* 主色 */
+  --ok: #059669;          /* 成功 */
+  --warn: #d97706;        /* 警示 */
+  --bad: #dc2626;         /* 危險 */
+  --pill: #eef2ff;        /* 淡藍 pill */
+  --mono: #0b1220;        /* 等寬字顏色 */
+  --mono-bg: #f3f4f6;     /* 結果區柔灰底 */
+  --hover: #f1f5f9;       /* hover 背景 */
+  --shadow: 0 6px 20px rgba(15, 23, 42, .06);
+
+  display: block;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial, "Microsoft JhengHei", "PingFang TC", "Heiti TC", sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 所有內部元素都遵循 box-sizing */
+:host * {
+  box-sizing: border-box;
+}
+
+/* 容器 */
+.container {
+  max-width: 1100px;
+  margin: 32px auto 80px;
+  padding: 0 16px;
+}
+
+/* 頁首與工具列 */
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: clamp(20px, 1.6rem, 28px);
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: .95rem;
+  margin-top: -4px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .15s ease, transform .02s ease;
+}
+.btn:hover {
+  background: var(--hover);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn.brand {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+.btn.brand:hover {
+  filter: brightness(.96);
+}
+.btn.danger {
+  background: #fff;
+  color: var(--bad);
+  border-color: #fecaca;
+}
+.btn.danger:hover {
+  background: #fff5f5;
+}
+.btn.ghost {
+  background: transparent;
+}
+
+/* 卡片與版型 */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: 1.05fr .95fr;
+  }
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.section-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--pill);
+  color: #3730a3;
+  font-weight: 600;
+  font-size: .9rem;
+}
+.hint {
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+/* 輸入區 */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+label {
+  font-weight: 600;
+}
+textarea {
+  width: 100%;
+  min-height: 160px;
+  resize: vertical;
+  font-size: 1rem;
+  line-height: 1.6;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: #fff;
+  color: var(--text);
+}
+.stat-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* 結果區（等寬字 + 柔灰底） */
+.pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", "Noto Sans Mono CJK TC", monospace;
+  background: var(--mono-bg);
+  color: var(--mono);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  white-space: pre-wrap;
+  overflow: auto;
+  max-height: 460px;
+}
+
+/* 固定側邊快速動作（桌機顯示） */
+.side-buttons {
+  position: fixed;
+  right: 24px;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.side-buttons .btn {
+  background: #fff;
+}
+@media (max-width: 1080px) {
+  .side-buttons {
+    display: none;
+  }
+}

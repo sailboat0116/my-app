@@ -1,0 +1,68 @@
+<div class="container">
+  <!-- 頁首 -->
+  <header class="page-head">
+    <div>
+      <div class="title">診斷報告結果</div>
+      <div class="subtitle">與填表頁樣式一致的輕量預覽與結構化檢視</div>
+    </div>
+    <div class="toolbar">
+      <button class="btn" (click)="back()">返回填表</button>
+      <button class="btn" (click)="print()">列印 / 另存 PDF</button>
+      <button class="btn" (click)="copyReport()">複製報告文字</button>
+      <button class="btn" (click)="downloadJSON()">下載 JSON</button>
+      <button class="btn danger" (click)="logout()">登出</button>
+      <button class="btn brand" (click)="nextPage()">下一頁</button>
+    </div>
+  </header>
+
+  <!-- 主內容 -->
+  <div class="grid">
+    <!-- 左側：報告預覽 -->
+    <section class="card">
+      <div class="section-head">
+        <h3>報告預覽</h3>
+        <span class="pill">{{ previewBadge }}</span>
+      </div>
+      <div class="report-pre" aria-label="Report Preview">{{ reportText }}</div>
+      <div class="hint" style="margin-top:8px;">
+        小提示：此處為 AI／系統生成或整理後的文字稿。你可以先「複製報告文字」送審，再視需要匯出 JSON 進行自動回填。
+      </div>
+    </section>
+
+    <!-- 右側：結構化資料 -->
+    <aside class="card">
+      <div class="section-head">
+        <h3>結構化資料（Form Data）</h3>
+        <div class="json-tools">
+          <button class="btn" (click)="copyJSON()">複製 JSON</button>
+          <button class="btn" (click)="validateJSON()">驗證 JSON</button>
+        </div>
+      </div>
+
+      <details class="summary-card" open>
+        <summary>
+          目前資料（localStorage: <code>generatedReport</code>）
+          <span class="hint">{{ jsonStatus }}</span>
+        </summary>
+        <textarea
+          class="json-pre"
+          aria-label="Form Data JSON"
+          rows="15"
+          [(ngModel)]="formDataText"
+          style="width:100%;"
+        ></textarea>
+      </details>
+    </aside>
+  </div>
+
+  <p class="hint" style="margin-top:16px;">
+    資料來源：本頁會從 <code>localStorage.reportText</code> 與
+    <code>localStorage.generatedReport</code> 載入內容；返回填表後可再調整欄位並重新產生。
+  </p>
+</div>
+
+<!-- 固定側邊快速動作（桌機） -->
+<div class="side-buttons">
+  <button class="btn" (click)="copyReport()">複製報告</button>
+  <button class="btn" (click)="downloadJSON()">下載 JSON</button>
+</div>

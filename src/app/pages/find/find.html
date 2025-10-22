@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <div class="logo">DB</div>
+      <div>
+        <h1>報告資料庫查詢</h1>
+        <div class="muted">支援日期範圍查詢，連動 n8n Webhook。</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section-title">日期範圍查詢</div>
+      <div class="row">
+        <div class="field">
+          <label for="dateFrom">開始日期</label>
+          <input type="date" id="dateFrom" [(ngModel)]="dateFrom" />
+        </div>
+        <div class="field">
+          <label for="dateTo">結束日期</label>
+          <input type="date" id="dateTo" [(ngModel)]="dateTo" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" (click)="searchReports()">🔎 查詢</button>
+        <button class="btn-secondary" (click)="resetFilters()">↺ 重設</button>
+      </div>
+
+      <div class="section-title">查詢結果</div>
+      <div class="result">
+        <div *ngIf="reports.length === 0" class="empty">{{ message }}</div>
+
+        <table *ngIf="reports.length > 0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>日期</th>
+              <th>腫瘤位置</th>
+              <th>腫瘤大小</th>
+              <th>T 分期</th>
+              <th>N 分期</th>
+              <th>M 分期</th>
+              <th>Lung-RADS</th>
+              <th>其他發現</th>
+              <th>報告內容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of reports; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ r.created_at?.slice(0,10) }}</td>
+              <td>{{ r.tumor_location }}</td>
+              <td>{{ r.tumor_size_cm }}</td>
+              <td>{{ r.T_stage }}</td>
+              <td>{{ r.N_stage }}</td>
+              <td>{{ r.M_stage }}</td>
+              <td>{{ r.lung_rads_category }}</td>
+              <td>{{ r.other_findings }}</td>
+              <td>{{ r.report_text }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

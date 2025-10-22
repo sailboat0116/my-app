@@ -1,0 +1,63 @@
+<div class="container">
+  <!-- 頁首 -->
+  <header class="page-head">
+    <div>
+      <div class="title">肺部影像觀察輸入</div>
+      <div class="subtitle">與填表頁一致的淺色風格與工具列</div>
+    </div>
+    <div class="toolbar">
+      <button class="btn" (click)="goBack()">返回填表</button>
+      <button class="btn" (click)="clearInput()">清空輸入</button>
+      <button class="btn" (click)="copyObservation()">複製觀察文字</button>
+      <button class="btn" (click)="saveToLocal()">儲存至本機</button>
+      <button class="btn brand" (click)="goToResponse()">前往結果頁</button>
+      <button class="btn danger" (click)="logout()">登出</button>
+    </div>
+  </header>
+
+  <!-- 內容 -->
+  <div class="grid">
+    <!-- 左：輸入區 -->
+    <section class="card">
+      <div class="section-head">
+        <h3>輸入觀察內容</h3>
+        <span class="pill">{{ obsBadge }}</span>
+      </div>
+      <form class="field" (ngSubmit)="generateReport()">
+        <label for="observation">請輸入觀察內容：</label>
+        <textarea
+          id="observation"
+          name="observation"
+          [(ngModel)]="observation"
+          placeholder="例如：右上肺葉見 45 mm 結節，邊緣不規則並伴有 spiculation，鄰近胸膜受侵犯疑慮……"
+        ></textarea>
+        <div class="stat-line">
+          <span class="hint">快捷鍵：<kbd>Ctrl / ⌘</kbd> + <kbd>Enter</kbd> 送出</span>
+          <span class="hint">{{ charCount }} 字</span>
+        </div>
+        <div class="toolbar">
+          <button type="submit" class="btn brand">產生診斷報告</button>
+          <button type="button" class="btn" (click)="copyResult()">複製結果</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 右：結果區 -->
+    <aside class="card">
+      <div class="section-head">
+        <h3>診斷結果</h3>
+        <span class="pill">{{ resultBadge }}</span>
+      </div>
+      <pre class="pre" aria-label="Generated Report">{{ result }}</pre>
+      <p class="hint" style="margin-top:8px;">
+        備註：本頁會將結果文字同步到 <code>localStorage.reportText</code>，可搭配 <code>response.html</code> 頁面進行預覽、列印與下載。
+      </p>
+    </aside>
+  </div>
+</div>
+
+<!-- 固定側邊快速動作（桌機） -->
+<div class="side-buttons">
+  <button class="btn" (click)="copyObservation()">複製觀察</button>
+  <button class="btn" (click)="copyResult()">複製結果</button>
+</div>
