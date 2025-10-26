@@ -191,7 +191,7 @@ export class HomeComponent implements OnInit {
     });
 
     // Angular 呼叫 proxy
-    this.http.post('http://localhost:3000/api/lung-report', result).subscribe({
+    this.http.post('/api/lung-report', result).subscribe({
       next: data => console.log('成功傳送至 n8n:', data),
       error: err => console.error('傳送失敗：', err)
     });
