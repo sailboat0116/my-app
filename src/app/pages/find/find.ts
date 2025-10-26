@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 interface Report {
+  input?: string;
+  patient_name?: string;
+  patient_info?: string;
   created_at?: string;
   tumor_location?: string;
   tumor_size_cm?: string;
@@ -16,31 +19,43 @@ interface Report {
 }
 
 @Component({
-  selector: 'app-find',
+  selector: 'app-report-search',
   standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './find.html',
   styleUrls: ['./find.css']
 })
 export class FindComponent {
-  N8N_BASE = "http://172.20.10.2:5678";
-  QUERY_EP = `${this.N8N_BASE}/webhook/query-reports`;
+  // n8n Webhook
+  QUERY_EP = 'https://n8n.fcubiolab.com/webhook/query-reports';
 
-  dateFrom: string = '';
-  dateTo: string = '';
+  // 表單欄位
+  patientInput = '';
+  patientName = '';
+  patientInfo = '';
+  dateFrom = '';
+  dateTo = '';
+
+  // 查詢結果
   reports: Report[] = [];
-  message: string = '尚未查詢，請先輸入條件並按「查詢」。';
+  message = '尚未查詢，請先輸入條件並按「查詢」。';
 
   constructor(private http: HttpClient) {}
 
   searchReports() {
-    if (!this.dateFrom && !this.dateTo) {
-      this.message = "請至少輸入一個日期。";
+    if (!this.patientInput && !this.patientName && !this.patientInfo && !this.dateFrom && !this.dateTo) {
       this.reports = [];
+      this.message = '請至少輸入一個查詢條件。';
       return;
     }
 
-    const payload = { dateFrom: this.dateFrom, dateTo: this.dateTo };
+    const payload = {
+      patientInput: this.patientInput,
+      patientName: this.patientName,
+      patientInfo: this.patientInfo,
+      dateFrom: this.dateFrom,
+      dateTo: this.dateTo
+    };
 
     this.http.post<any>(this.QUERY_EP, payload).subscribe({
       next: data => {
@@ -57,12 +72,15 @@ export class FindComponent {
       error: err => {
         console.error(err);
         this.reports = [];
-        this.message = "查詢失敗：" + (err.message || err.statusText);
+        this.message = '查詢失敗：' + (err.message || err.statusText);
       }
     });
   }
 
   resetFilters() {
+    this.patientInput = '';
+    this.patientName = '';
+    this.patientInfo = '';
     this.dateFrom = '';
     this.dateTo = '';
     this.reports = [];
