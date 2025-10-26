@@ -237,11 +237,6 @@ export class HomeComponent implements OnInit {
       error: err => console.error('存檔失敗：', err)
     });
 
-    this.http.post('https://n8n.fcubiolab.com/webhook/lung-report', result).subscribe({
-      next: data => console.log('成功傳送至 n8n:', data),
-      error: err => console.error('傳送失敗：', err)
-    });
-
   }
 
   // ---- 清空表單 ----
