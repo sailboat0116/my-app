@@ -185,11 +185,6 @@ export class HomeComponent implements OnInit {
 
     console.log('Saved JSON:', result);
 
-    this.http.post('api/save-result', result).subscribe({
-      next: data => console.log('存檔結果：', data),
-      error: err => console.error('存檔失敗：', err)
-    });
-
     this.http.post('https://n8n.fcubiolab.com/webhook/lung-report', result).subscribe({
       next: data => console.log('成功傳送至 n8n:', data),
       error: err => console.error('傳送失敗：', err)
@@ -232,9 +227,9 @@ export class HomeComponent implements OnInit {
 
     console.log('Saved JSON:', result);
 
-    this.http.post('api/save-before-result', result).subscribe({
-      next: data => console.log('存檔結果：', data),
-      error: err => console.error('存檔失敗：', err)
+    this.http.post('https://n8n.fcubiolab.com/webhook/lung-report', result).subscribe({
+      next: data => console.log('成功傳送至 n8n:', data),
+      error: err => console.error('傳送失敗：', err)
     });
 
   }
