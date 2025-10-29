@@ -118,16 +118,51 @@ export class HomeComponent implements OnInit {
     if (report.M_stage) this.autoCheckStage(this.M, report.M_stage);
 
     if (report.tumor_location) {
-      const codes = report.tumor_location.toUpperCase().split(',').map((s: string) => s.trim());
-      this.locations.RUL = codes.includes('RUL');
-      this.locations.RML = codes.includes('RML');
-      this.locations.RLL = codes.includes('RLL');
-      this.locations.LUL = codes.includes('LUL');
-      this.locations.LLL = codes.includes('LLL');
-      const other = codes.find((c: string) => !['RUL','RML','RLL','LUL','LLL'].includes(c));
+      const locationMap = {
+        RUL: "Right upper lobe",
+        RML: "Right middle lobe",
+        RLL: "Right lower lobe",
+        LUL: "Left upper lobe",
+        LLL: "Left lower lobe",
+      };
 
-      if (other) this.locations.Other = other;
+      const tumorLocations = report.tumor_location
+        .split(",")
+        .map((s: string) => s.trim().toUpperCase())
+        .filter(Boolean)
+        .map((s: string) => {
+          const matchBracket = s.match(/\((RUL|RML|RLL|LUL|LLL)\)/i);
+          if (matchBracket) return matchBracket[1].toUpperCase();
+
+          const matchPrefix = s.match(/^(RUL|RML|RLL|LUL|LLL)\b/i);
+          if (matchPrefix) return matchPrefix[1].toUpperCase();
+
+          return null;
+        })
+        .filter(Boolean);
+
+      document.querySelectorAll<HTMLInputElement>('input[name="location"]').forEach((input: HTMLInputElement) => {
+        const label = input.parentElement?.textContent?.replace(/\s+/g, ' ').trim() || '';
+        input.checked = false;
+
+        tumorLocations.forEach((code: string) => {
+          const expectedLabel = locationMap[code as keyof typeof locationMap];
+          if (expectedLabel && label === expectedLabel) {
+            input.checked = true;
+          }
+        });
+      });
+
+      this.locations = {
+        RUL: tumorLocations.includes("RUL"),
+        RML: tumorLocations.includes("RML"),
+        RLL: tumorLocations.includes("RLL"),
+        LUL: tumorLocations.includes("LUL"),
+        LLL: tumorLocations.includes("LLL"),
+        Other: tumorLocations.filter((c: string) => !(c in locationMap)).join(", "),
+      };
     }
+
 
     if (report.tumor_size_cm) {
       if (report.tumor_size_cm.toLowerCase().includes('non')) {
